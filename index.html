@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>单手一个八拍</title>
+    <style>
+    .fl {
+        float: left;
+    }
+
+    .handBox {
+        position: relative;
+        z-index: 2;
+        width: 250px;
+        height: 190px;
+    }
+
+    .praiseDsp {
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        color: orange;
+        font-size: 16px;
+    }
+
+    .finger {
+        display: block;
+        width: 36px;
+        height: 30px;
+        background: #f6d9c9;
+        border: solid 1px #d99472;
+        border-left: none;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .finger:before {
+        position: relative;
+        content: '';
+        display: block;
+        width: 33px;
+        height: 24px;
+        background: linear-gradient(to right, #f6d9c9, #fff);
+        ;
+        margin-top: 3px;
+        border-radius: 10px;
+    }
+
+    .palm {
+        position: relative;
+        z-index: 1;
+        width: 80px;
+        height: 126px;
+        border: solid 1px #d99472;
+        border-right: none;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 10px;
+        background: #f6d9c9;
+    }
+
+    .arm {
+        width: 90px;
+        height: 80px;
+        position: relative;
+        z-index: 10;
+        top: 25px;
+        /*margin-top: -40px;*/
+        margin-right: -10px;
+        background: #f6d9c9;
+        border-top: solid 1px #d99472;
+    }
+
+    .thumb {
+        width: 30px;
+        height: 65px;
+        background: #f6d9c9;
+        border-top: solid 1px #d99472;
+        border-left: solid 1px #d99472;
+        position: relative;
+        left: 104px;
+        margin-bottom: -14px;
+        transform: rotate(30deg);
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        z-index: 10;
+    }
+
+    .thumb:before {
+        position: relative;
+        content: '';
+        display: block;
+        width: 28px;
+        height: 24px;
+        background: -webkit-linear-gradient(left, #f4cbb7, #fff);
+        background: -o-linear-gradient(left, #f4cbb7, #fff);
+        background: linear-gradient(to right, #f4cbb7, #fff);
+        ;
+        margin-top: 3px;
+        border-radius: 10px;
+    }
+
+    .thumb:after {
+        display: block;
+        content: '';
+        width: 24px;
+        height: 20px;
+        position: relative;
+        background: linear-gradient(to top, #f6d9c9 0%, #dfb59f 100%);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        margin: auto;
+        top: 7px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="handBox">
+        <p class="praiseDsp">点赞数：<i class="praiseCount">0</i></p>
+        <div class="thumb" id="thumb"></div>
+        <div class="arm fl"></div>
+        <div class="palm fl">
+        </div>
+        <div class="fingers fl">
+            <span class="finger"></span>
+            <span class="finger"></span>
+            <span class="finger"></span>
+            <span class="finger"></span>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="lib/system.js"></script>
+    <script>
+    (function($, u) {
+        System.import('des/ThumbPraiseButton.js').then(function(m) { //挂载组件
+            $.fn.praise = function(ele) {
+                var _praiseCount = this.attr("data-praiseCount"),
+                    _praise = new m.ThumbPraiseButton(_praiseCount);
+                _praiseCount = _praise.favour();
+                $(ele).text(_praiseCount);
+                return this.attr("data-praiseCount", _praiseCount);
+            }
+        });
+        //
+        $("#thumb").on("click", function(e) {
+            $(this).praise(".praiseCount");
+        });
+    })(jQuery);
+    </script>
+</body>
+
+</html>
